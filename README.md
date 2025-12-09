@@ -1,34 +1,56 @@
-# SecureNote – Encrypted Local-Only Notes App
+# SecureNotes – Encrypted Local-Only Notes App
 
-SecureNote is a privacy-focused Android note-taking application. All notes are stored locally on the device and protected with AES-256 encryption and a master PIN. No cloud storage, no tracking, and no external servers.
+SecureNote is a privacy-focused Android note-taking application designed for users who prioritize security, offline access, and data ownership. All notes are stored locally and protected with AES-256 encryption. The application does not use cloud storage, tracking, or external servers.
 
 ---
 
 ## Features
 
-### Local Storage Only
+### Local-Only Encrypted Storage
 
-Notes are stored in an encrypted Room database on the user’s device. No cloud sync or data transmission.
+All note content is encrypted before being inserted into the Room database. No network permissions are requested, ensuring all data stays on the device.
 
 ### AES-256 Encryption
 
-All note content is encrypted before being written to the database to ensure confidentiality even if the file is accessed.
+SecureNote uses AES-256 to protect note content, attachments, and metadata. Even if the database or files are extracted, data remains unreadable without the correct key.
 
 ### Master PIN
 
-A master PIN is used to unlock the app and derive the encryption key. The PIN is never stored in plaintext.
+A master PIN is required to unlock the app and is used for deriving the encryption key through a secure key-derivation function such as PBKDF2. The PIN is not stored in plaintext.
+
+### Per-Note Password
+
+Individual notes can be secured with an additional password. Protected notes require both the master PIN (to open the app) and the note-specific password.
+
+### File Attachments
+
+Notes support encrypted attachments, including:
+
+* Images
+* Voice recordings
+* Documents
+
+All attachments are encrypted and stored inside the app’s private storage.
+
+### Category System
+
+Notes can be organized into categories. Users can create and manage categories for easier navigation.
+
+### Search Functionality
+
+A fast offline search system allows users to locate notes by title or content. Decryption happens only when needed for secure on-device searching.
 
 ### Encrypted Backups
 
-Users can export an encrypted backup file. Without the backup password, the file cannot be decrypted or imported.
+The app supports exporting and importing encrypted backup files. Backups can only be restored with the correct backup password.
 
 ### Modern UI
 
-Built using Material Design 3 components with a clean and minimal interface.
+Built using Material Design 3 for a clean, consistent, and intuitive user experience.
 
 ### Offline and Lightweight
 
-The app requires no internet access and does not depend on any external services.
+SecureNote does not request internet access and does not depend on external services.
 
 ---
 
@@ -36,19 +58,23 @@ The app requires no internet access and does not depend on any external services
 
 ### Encrypted Storage
 
-All note text is encrypted before insertion into the Room database.
+Text, attachments, metadata, and categories are encrypted before being stored. Attachments are saved as encrypted files in private app storage.
 
 ### Key Derivation
 
-Encryption keys are derived from the master PIN using a secure key-derivation function (such as PBKDF2).
+Encryption keys are derived from the master PIN using PBKDF2 or an equivalent KDF.
+
+### Per-Note Password Layer
+
+Notes with an additional password use an extra layer of encryption.
 
 ### Encrypted Backups
 
-Backup files are separately encrypted to remain private even when stored externally.
+Backup files are encrypted separately using a user-defined password to ensure privacy when exported.
 
 ### No Network Permissions
 
-The application does not request internet access, reducing the attack surface and preventing data transmission.
+The app does not access or transmit data over the internet.
 
 ---
 
@@ -70,45 +96,31 @@ SecureNote/
 
 ### Requirements
 
-* Android Studio (Hedgehog or later)
+* Android Studio Hedgehog or later
 * Java 17+
 * Minimum SDK 24
 
 ### Build Instructions
 
 ```
-git clone https://github.com/yourusername/SecureNote.git
-cd SecureNote
+git clone https://github.com/praisi-tech/Secure-NoteApp.git
+cd Secure-NoteApp
 ```
 
 Open the project in Android Studio, build, and run.
 
 ---
 
-## Roadmap
-
-* Dark mode
-* Master PIN unlock
-* Search functionality
-* Folder organization
-* Optional plaintext export
-* Integration with Android Keystore
-
----
-
 ## Testing
 
-* Encryption and decryption tests
-* Backup file integrity tests
-* PIN validation and lockout tests
-* UI tests
+* Unit tests for encryption/decryption
+* Integrity testing for backup import/export
+* PIN verification and lockout tests
+* UI tests for note creation, search, and category filtering
 
 ---
 
 ## Privacy Policy
 
-SecureNote does not collect data, does not transmit any information, and does not store anything on external servers. All data remains encrypted on the device.
-
----
-
-
+SecureNote does not collect, transmit, or store data on any external server.
+All data remains local and encrypted on the user’s device.
